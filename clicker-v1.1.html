@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clicker Game v1.1</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(to right, #1c1c3c, #2c3e50);
+      color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #f4d03f;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      color: #dcdcdc;
+    }
+
+    #counter {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #f4d03f;
+    }
+
+    button {
+      background-color: #f4d03f;
+      color: #2c3e50;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ffd700;
+      transform: scale(1.05);
+    }
+
+    #upgradeBtn {
+      background-color: #58d68d;
+      color: #1c1c3c;
+    }
+
+    #upgradeBtn:hover {
+      background-color: #2ecc71;
+    }
+
+    #status {
+      font-size: 1em;
+      margin-top: 10px;
+      color: #85c1e9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Clicker Game</h1>
+  <p>Version 1.1 — now with <s>upgrades</s> upgrade. only one upgrade. enjoy!</p>
+  <p>Chapter 1: Getting an Upgrade...</p>
+
+  <div id="counter">0</div>
+  <button onclick="increment()">Click Me</button>
+  <button id="upgradeBtn" onclick="buyUpgrade()">Buy Multiplier (+2 per click)</button>
+  <div id="status">Upgrade cost: 10 clicks</div>
+
+  <script>
+    let count = 0;
+    let multiplier = 1;
+    let upgradePurchased = false;
+
+    function increment() {
+      count += multiplier;
+      document.getElementById("counter").textContent = count;
+      updateStatus();
+    }
+
+    function buyUpgrade() {
+      if (!upgradePurchased && count >= 10) {
+        count -= 10;
+        multiplier = 2;
+        upgradePurchased = true;
+        document.getElementById("upgradeBtn").disabled = true;
+        document.getElementById("upgradeBtn").textContent = "Multiplier Activated!";
+        updateStatus();
+        document.getElementById("counter").textContent = count;
+      }
+    }
+
+    function updateStatus() {
+      if (!upgradePurchased) {
+        document.getElementById("status").textContent = `Upgrade cost: 10 clicks`;
+      } else {
+        document.getElementById("status").textContent = `You're clicking with power!`;
+      }
+    }
+  </script>
+
+</body>
+</html>

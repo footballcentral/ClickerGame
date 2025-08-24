@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clicker Game v1.4</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(to right, #1c1c3c, #2c3e50);
+      color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #f4d03f;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      color: #dcdcdc;
+    }
+
+    #counter {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #f4d03f;
+      transition: transform 0.2s ease;
+    }
+
+    button {
+      background-color: #f4d03f;
+      color: #2c3e50;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ffd700;
+      transform: scale(1.05);
+    }
+
+    #status {
+      font-size: 1em;
+      margin-top: 10px;
+      color: #85c1e9;
+    }
+
+    .upgrade-bar {
+      position: absolute;
+      bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .pulse {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Clicker Game</h1>
+  <p>Version 1.4 — four upgrades, infinite power</p>
+
+  <div id="counter">0</div>
+  <button onclick="increment()">Click Me</button>
+  <div id="status">Upgrades: Multiplier, AutoClicker, Mega Click, Super AutoClicker</div>
+
+  <div class="upgrade-bar">
+    <button onclick="buyMultiplier()">Buy Multiplier (+1 per click, 10 clicks)</button>
+    <button onclick="buyAutoClicker()">Buy AutoClicker (+1/sec, 50 clicks)</button>
+    <button onclick="buyMegaClick()">Buy Mega Click (+100 per click, 100,000 clicks)</button>
+    <button onclick="buySuperAuto()">Buy Super AutoClicker (+10/sec, 10,000 clicks)</button>
+  </div>
+
+  <script>
+    let count = 0;
+    let multiplier = 1;
+    let autoClickRate = 0;
+
+    function increment() {
+      count += multiplier;
+      updateCounter();
+      pulseCounter();
+    }
+
+    function buyMultiplier() {
+      if (count >= 10) {
+        count -= 10;
+        multiplier += 1;
+        updateCounter();
+      }
+    }
+
+    function buyAutoClicker() {
+      if (count >= 50) {
+        count -= 50;
+        autoClickRate += 1;
+        updateCounter();
+        startAutoClick();
+      }
+    }
+
+    function buyMegaClick() {
+      if (count >= 100000) {
+        count -= 100000;
+        multiplier += 100;
+        updateCounter();
+      }
+    }
+
+    function buySuperAuto() {
+      if (count >= 10000) {
+        count -= 10000;
+        autoClickRate += 10;
+        updateCounter();
+        startAutoClick();
+      }
+    }
+
+    function startAutoClick() {
+      if (!window.autoClickerRunning) {
+        window.autoClickerRunning = true;
+        setInterval(() => {
+          count += autoClickRate;
+          updateCounter();
+        }, 1000);
+      }
+    }
+
+    function updateCounter() {
+      document.getElementById("counter").textContent = count;
+      updateStatus();
+    }
+
+    function updateStatus() {
+      document.getElementById("status").textContent =
+        `Upgrades: Multiplier = ${multiplier}/click | AutoClicker = ${autoClickRate}/sec`;
+    }
+
+    function pulseCounter() {
+      const counter = document.getElementById("counter");
+      counter.classList.add("pulse");
+      setTimeout(() => counter.classList.remove("pulse"), 150);
+    }
+  </script>
+
+</body>
+</html>

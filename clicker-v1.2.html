@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clicker Game v1.2</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(to right, #1c1c3c, #2c3e50);
+      color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #f4d03f;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      color: #dcdcdc;
+    }
+
+    #counter {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #f4d03f;
+    }
+
+    button {
+      background-color: #f4d03f;
+      color: #2c3e50;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ffd700;
+      transform: scale(1.05);
+    }
+
+    #upgradeBtn {
+      background-color: #58d68d;
+      color: #1c1c3c;
+    }
+
+    #autoClickerBtn {
+      background-color: #85c1e9;
+      color: #1c1c3c;
+    }
+
+    #upgradeBtn:hover {
+      background-color: #2ecc71;
+    }
+
+    #autoClickerBtn:hover {
+      background-color: #3498db;
+    }
+
+    #status {
+      font-size: 1em;
+      margin-top: 10px;
+      color: #85c1e9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Clicker Game</h1>
+  <p>Version 1.2 — Chapter 2: The Autoclicker...</p>
+
+  <div id="counter">0</div>
+  <button onclick="increment()">Click Me</button>
+  <button id="upgradeBtn" onclick="buyUpgrade()">Buy Multiplier (+2 per click)</button>
+  <button id="autoClickerBtn" onclick="buyAutoClicker()">Buy AutoClicker (+1/sec)</button>
+  <div id="status">Upgrades: Multiplier (10 clicks), AutoClicker (50 clicks)</div>
+
+  <script>
+    let count = 0;
+    let multiplier = 1;
+    let upgradePurchased = false;
+    let autoClickerPurchased = false;
+
+    function increment() {
+      count += multiplier;
+      updateCounter();
+      updateStatus();
+    }
+
+    function buyUpgrade() {
+      if (!upgradePurchased && count >= 10) {
+        count -= 10;
+        multiplier = 2;
+        upgradePurchased = true;
+        document.getElementById("upgradeBtn").disabled = true;
+        document.getElementById("upgradeBtn").textContent = "Multiplier Activated!";
+        updateCounter();
+        updateStatus();
+      }
+    }
+
+    function buyAutoClicker() {
+      if (!autoClickerPurchased && count >= 50) {
+        count -= 50;
+        autoClickerPurchased = true;
+        document.getElementById("autoClickerBtn").disabled = true;
+        document.getElementById("autoClickerBtn").textContent = "AutoClicker Running!";
+        updateCounter();
+        updateStatus();
+        setInterval(() => {
+          count += 1;
+          updateCounter();
+        }, 1000);
+      }
+    }
+
+    function updateCounter() {
+      document.getElementById("counter").textContent = count;
+    }
+
+    function updateStatus() {
+      let statusText = "";
+      if (!upgradePurchased) {
+        statusText += "Multiplier (10 clicks)";
+      } else {
+        statusText += "Multiplier: Active";
+      }
+
+      statusText += " | ";
+
+      if (!autoClickerPurchased) {
+        statusText += "AutoClicker (50 clicks)";
+      } else {
+        statusText += "AutoClicker: Active";
+      }
+
+      document.getElementById("status").textContent = "Upgrades: " + statusText;
+    }
+  </script>
+
+</body>
+</html>
