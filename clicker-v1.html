@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clicker Game v1</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(to right, #1c1c3c, #2c3e50);
+      color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #f4d03f;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      color: #dcdcdc;
+    }
+
+    #counter {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #f4d03f;
+    }
+
+    button {
+      background-color: #f4d03f;
+      color: #2c3e50;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #ffd700;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Clicker Game</h1>
+  <p>Version 1.0</p>
+
+  <div id="counter">0</div>
+  <button onclick="increment()">Click Me</button>
+
+  <script>
+    let count = 0;
+    function increment() {
+      count++;
+      document.getElementById("counter").textContent = count;
+    }
+  </script>
+
+</body>
+</html>
